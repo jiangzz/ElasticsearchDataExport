@@ -1,0 +1,6 @@
+jdd:
+  jes:
+    service-url: http://jes.jdd-office-dev.com
+    app-name: galaxy-jtlas-app
+    cluster: jes643
+    secret: c9f03dff789318d91b35ef0fc26fed33

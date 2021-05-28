@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/DistributeInvokerRPC/DistributeInvokerRPC.iml" filepath="$PROJECT_DIR$/DistributeInvokerRPC/DistributeInvokerRPC.iml" />
+      <module fileurl="file://$PROJECT_DIR$/IDMDataExport/IDMDataExport.iml" filepath="$PROJECT_DIR$/IDMDataExport/IDMDataExport.iml" />
+    </modules>
+  </component>
+</project>
