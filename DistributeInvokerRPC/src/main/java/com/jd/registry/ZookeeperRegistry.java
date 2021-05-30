@@ -17,6 +17,7 @@ import java.util.Date;
 @Data
 @Slf4j
 public class ZookeeperRegistry {
+
     private String application;
     private CuratorFramework client=null;
 
@@ -25,22 +26,28 @@ public class ZookeeperRegistry {
       client= CuratorFrameworkFactory.newClient(quorum, new ExponentialBackoffRetry(1000,10));
       client.start();
     }
+
+
     @SneakyThrows
     public void registryService(Class clazz,Integer port){
 
-        String basePath="/"+application+"/service/"+clazz.getCanonicalName();
-        log.info("注册服务路径 {}",basePath);
-        Stat stat = client.checkExists().forPath(basePath);
+        String base_path="/drpc/"+application+"/service/"+clazz.getCanonicalName();
+        log.info("注册服务路径 {}",base_path);
+        Stat stat = client.checkExists().forPath(base_path);
+
         if(stat==null){
             String path = client.create()
                     .creatingParentContainersIfNeeded()
                     .withMode(CreateMode.PERSISTENT)
-                    .forPath(basePath);
+                    .forPath(base_path);
+
             log.info("服务节点不存在,成功创建服务节点信息{}",path);
         }
+
         String hostAddress = InetAddress.getLocalHost().getHostAddress();
-        String servicePath=basePath+"/"+hostAddress+":"+port;
+        String servicePath=base_path+"/"+hostAddress+":"+port;
         stat = client.checkExists().forPath(servicePath);
+
         if(stat!=null){
             client.delete().forPath(servicePath);
             log.info("服务路径 {} 已经存在，删除该服务路径",servicePath);
@@ -50,10 +57,8 @@ public class ZookeeperRegistry {
         }
 
     }
-
-    public static void main(String[] args) {
-        ZookeeperRegistry registry = new ZookeeperRegistry("CentOS:2181","DistributeRPC");
-        registry.registryService(Date.class,8990);
+    public void close(){
+        log.info("关闭注册中心...");
+        client.close();
     }
-
 }

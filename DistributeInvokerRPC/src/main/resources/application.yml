@@ -1,0 +1,8 @@
+spring:
+  drpc:
+    enable:  true
+    application-name: DRPC服务测试
+    zookeeper-servers: CentOS:2181
+    server-port: 9000
+    timeout: 5000
+    provider-packages: com.jd.service
